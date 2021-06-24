@@ -204,7 +204,7 @@
                 "intervention/imagecache": "^2.3",
                 "laravel/framework": "^7.30|^8.34",
                 "maatwebsite/excel": "^3.1",
-                "php": "^7.4"
+                "php": "^7.2"
             },
             "type": "library",
             "extra": {
