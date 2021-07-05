@@ -32,6 +32,61 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Tanggal","name"=>"dTanggal"];
 			$this->col[] = ["label"=>"Keterangan","name"=>"mKeterangan"];
+			$this->col[] = [
+				"label" => "Total Jual ( Kg )", "name" => "(select sum(t_jual_detail.yJumlah) 
+																from t_jual_detail 
+																where 
+																t_jual_detail.lDeleted = 0 
+																AND t_jual_detail.t_jual_id = t_jual.id) as total_jual"
+																, "callback" => function ($row) {
+																	return number_format($row->total_jual);
+																}
+			];
+
+			$this->col[] = [
+				"label" => "Total Tagihan( Rp )", "name" => "(SELECT (SUM((t_jual_detail.yHarga * t_jual_detail.yJumlah))   ) AS total_tagihan
+																from t_jual_detail 
+																where 
+																t_jual_detail.lDeleted = 0 
+																AND t_jual_detail.t_jual_id = t_jual.id) as total_tagihan"
+																, "callback" => function ($row) {
+																	return number_format($row->total_tagihan);
+																}
+			];
+
+			$this->col[] = [
+				"label" => "Total Setoran( Rp )", "name" => "(select sum(t_jual_detail.yMinus) 
+																from t_jual_detail 
+																where 
+																t_jual_detail.lDeleted = 0 
+																AND t_jual_detail.t_jual_id = t_jual.id) as total_setor"
+																, "callback" => function ($row) {
+																	return number_format($row->total_setor);
+																}
+			];
+
+
+			$this->col[] = [
+				"label" => "Total Potongan Harga ( Rp )", "name" => "(select sum(t_jual_detail.yNawar) 
+																from t_jual_detail 
+																where 
+																t_jual_detail.lDeleted = 0 
+																AND t_jual_detail.t_jual_id = t_jual.id) as total_nawar"
+																, "callback" => function ($row) {
+																	return number_format($row->total_nawar);
+																}
+			];
+
+			$this->col[] = [
+				"label" => "Total Kurang Setor ( Rp )", "name" => "(SELECT (SUM((t_jual_detail.yHarga * t_jual_detail.yJumlah))  - ( sum(ifnull(t_jual_detail.yMinus,0)) + sum(ifnull(t_jual_detail.yNawar,0)) )  ) AS kurang_setor
+																from t_jual_detail 
+																where 
+																t_jual_detail.lDeleted = 0 
+																AND t_jual_detail.t_jual_id = t_jual.id) as kurang_setor"
+																, "callback" => function ($row) {
+																	return number_format($row->kurang_setor);
+																}
+			];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
