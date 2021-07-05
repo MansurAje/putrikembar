@@ -47,7 +47,17 @@ class AdminTBeliController extends \crocodicstudio\crudbooster\controllers\CBCon
 															}
 		];
 		$this->col[] = [
-			"label" => "Jumlah ( Kg )", "name" => "(select sum(t_beli_detail.yJumlah) 
+			"label" => "Quantity ( Kg )", "name" => "(select sum(t_beli_detail.yJumlah) 
+															from t_beli_detail 
+															where 
+															t_beli_detail.lDeleted = 0 
+															AND t_beli_detail.t_beli_id = t_beli.id) as total_qty"
+															, "callback" => function ($row) {
+																return number_format($row->total_qty);
+															}
+		];
+		$this->col[] = [
+			"label" => "Jumlah ( Rp )", "name" => "(select sum(t_beli_detail.ySub_beli) 
 															from t_beli_detail 
 															where 
 															t_beli_detail.lDeleted = 0 
@@ -71,7 +81,9 @@ class AdminTBeliController extends \crocodicstudio\crudbooster\controllers\CBCon
 		$columns[] = ['label' => 'Kandang', 'name' => 'kandang_id', 'type' => 'datamodal', 'datamodal_table' => 'm_kandang', 'datamodal_columns' => 'vNama,mAlamat,vNo_telp', 'datamodal_select_to' => 'id:vNama', 'datamodal_where' => '', 'datamodal_size' => 'large'];
 		$columns[] = ['label' => 'Supir', 'name' => 'supir_id', 'type' => 'datamodal', 'datamodal_table' => 'm_supir', 'datamodal_columns' => 'vNama,vNo_telp', 'datamodal_select_to' => 'id:vNama', 'datamodal_where' => '', 'datamodal_size' => 'large'];
 		$columns[] = ['label' => 'Harga', 'name' => 'yHarga', 'type' => 'number', 'required' => true, 'width' => 'col-sm-4'];
-		$columns[] = ['label' => 'Jumlah ( Kg )', 'name' => 'yJumlah', 'type' => 'number', 'required' => true, 'width' => 'col-sm-4'];
+		$columns[] = ['label' => 'Quantity (Kg)', 'name' => 'yJumlah', 'type' => 'number', 'required' => true, 'width' => 'col-sm-4'];
+		$columns[] = ['label'=>'Jumlah (Rp)','name'=>'ySub_beli','type'=>'number','formula'=>"[yHarga] * [yJumlah] ","readonly"=>true,'required'=>true,'width'=>'col-sm-4'];
+
 		$columns[] = ['label' => 'Operasional', 'name' => 'yOperasional', 'type' => 'number', 'required' => true, 'width' => 'col-sm-4'];
 		// $columns[] = ['label'=>'Plus','name'=>'yPlus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
 		// $columns[] = ['label'=>'Minus','name'=>'yMinus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
