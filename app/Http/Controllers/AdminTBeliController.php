@@ -32,6 +32,16 @@
 			$this->col = [];
 			$this->col[] = ["label"=>"Tanggal","name"=>"dTanggal"];
 			$this->col[] = ["label"=>"Keterangan","name"=>"mKeterangan"];
+			$this->col[] = ["label"=>"Operasional","name"=>"(select sum(t_beli_detail.yOperasional) 
+															from t_beli_detail 
+															where 
+															t_beli_detail.lDeleted = 0 
+															AND t_beli_detail.t_beli_id = t_beli.id) as total_ops"];
+			// $this->col[] = ["label"=>"Operasional","name"=>"(SELECT SUM(a.yOperasional) total
+			// 												FROM t_beli_detail a 
+			// 												WHERE 
+			// 												a.lDeleted=0
+			// 												and a.t_beli_id= t_beli.id) AS operasional "];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
@@ -44,9 +54,9 @@
 			$columns[] = ['label'=>'Harga','name'=>'yHarga','type'=>'number','required'=>true,'width'=>'col-sm-4'];
 			$columns[] = ['label'=>'Jumlah ( Kg )','name'=>'yJumlah','type'=>'number','required'=>true,'width'=>'col-sm-4'];
 			$columns[] = ['label'=>'Operasional','name'=>'yOperasional','type'=>'number','required'=>true,'width'=>'col-sm-4'];
-			$columns[] = ['label'=>'Plus','name'=>'yPlus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
-			$columns[] = ['label'=>'Minus','name'=>'yMinus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
-			$columns[] = ['label'=>'Nawar','name'=>'yNawar','type'=>'number','required'=>true,'width'=>'col-sm-4'];
+			// $columns[] = ['label'=>'Plus','name'=>'yPlus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
+			// $columns[] = ['label'=>'Minus','name'=>'yMinus','type'=>'number','required'=>true,'width'=>'col-sm-4'];
+			// $columns[] = ['label'=>'Nawar','name'=>'yNawar','type'=>'number','required'=>true,'width'=>'col-sm-4'];
 			$columns[] = ['label'=>'Keterangan','name'=>'mKeterangan','type'=>'textarea','required'=>false,'width'=>'col-sm-4'];
 			$this->form[] = ['label'=>'Detail Beli','name'=>'t_beli_detail','type'=>'child','width'=>'col-sm-4','columns'=>$columns,'table'=>'t_beli_detail','foreign_key'=>'t_beli_id'];
 			
